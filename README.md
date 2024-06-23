@@ -1,5 +1,9 @@
 # Laravel SourceQuery
 
-This packages serves as a wrapper for xPaw's SourceQuery package optimized for Laravel.
+This packages serves as a wrapper for https://github.com/rossengeorgiev/vdf-parser package optimized for Laravel.
 
-`composer require moonlydays/laravel-sourcequery`
+`composer require moonlydays/laravel-vdf`
+
+- rossengeorgiev/vdf-parser license: https://github.com/rossengeorgiev/vdf-parser/blob/master/LICENSE
+
+
