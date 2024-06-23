@@ -25,7 +25,7 @@ class Service
     /**
      * @throws VDFException
      */
-    public function decode(string $text): Fluent
+    public function decode(string $text): array
     {
         // detect and convert utf-16, utf-32 and convert to utf8
         if (str_starts_with($text, "\xFE\xFF")) {
@@ -123,7 +123,7 @@ class Service
             throw new VDFException("Open parentheses somewhere");
         }
 
-        return fluent($arr);
+        return $arr;
     }
 
     public function encode(Arrayable|array $arr, bool $pretty = false): ?string
