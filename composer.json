@@ -1,0 +1,27 @@
+{
+    "name": "moonlydays/laravel-vdf",
+    "description": "A Laravel wrapper for https://github.com/rossengeorgiev/vdf-parser",
+    "license": "MIT",
+    "homepage": "https://github.com/MoonlyDays/laravel-vdf",
+    "require": {
+        "illuminate/support": "^11.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "MoonlyDays\\LaravelVDF\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Daniil Basiuc-Brinzei",
+            "email": "contact@moonlydays.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "aliases": {
+                "VDF": "MoonlyDays\\LaravelVDF\\Facade"
+            }
+        }
+    }
+}
