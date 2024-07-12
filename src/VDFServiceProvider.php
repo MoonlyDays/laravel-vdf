@@ -12,10 +12,10 @@ class VDFServiceProvider extends ServiceProvider
     {
         $this->app->singleton(Service::class);
 
-        Response::macro('vdf', function (string $key = null, mixed $default = null) {
+        Response::macro('vdf', function (?string $key = null, mixed $default = null) {
             /** @var Response $this */
             $body = $this->body();
-            $decoded = VDF::decode($body);
+            $decoded = app(Service::class)->decode($body);
 
             if (is_null($key)) {
                 return $decoded;
@@ -26,7 +26,7 @@ class VDFServiceProvider extends ServiceProvider
 
         Filesystem::macro('vdf', function (string $path) {
             /** @var Filesystem $this */
-            return VDF::decode($this->get($path));
+            return app(Service::class)->decode($this->get($path));
         });
     }
 }
