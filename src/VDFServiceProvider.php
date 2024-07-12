@@ -2,6 +2,7 @@
 
 namespace MoonlyDays\LaravelVDF;
 
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\ServiceProvider;
 
@@ -11,16 +12,21 @@ class VDFServiceProvider extends ServiceProvider
     {
         $this->app->singleton(Service::class);
 
-        Response::macro('vdf', function (?string $key = null, mixed $default = null) {
+        Response::macro('vdf', function (string $key = null, mixed $default = null) {
             /** @var Response $this */
             $body = $this->body();
-            $decoded = app(Service::class)->decode($body);
+            $decoded = VDF::decode($body);
 
             if (is_null($key)) {
                 return $decoded;
             }
 
             return data_get($decoded, $key, $default);
+        });
+
+        Filesystem::macro('vdf', function (string $path) {
+            /** @var Filesystem $this */
+            return VDF::decode($this->get($path));
         });
     }
 }
