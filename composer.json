@@ -22,7 +22,10 @@
         "laravel": {
             "aliases": {
                 "VDF": "MoonlyDays\\LaravelVDF\\Facade"
-            }
+            },
+            "providers": [
+                "MoonlyDays\\LaravelVDF\\VDFServiceProvider"
+            ]
         }
     },
     "require-dev": {
