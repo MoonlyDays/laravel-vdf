@@ -2,6 +2,7 @@
 
 namespace MoonlyDays\LaravelVDF;
 
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\ServiceProvider;
 
 class VDFServiceProvider extends ServiceProvider
@@ -9,5 +10,17 @@ class VDFServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(Service::class);
+
+        Response::macro('vdf', function (?string $key = null, mixed $default = null) {
+            /** @var Response $this */
+            $body = $this->body();
+            $decoded = app(Service::class)->decode($body);
+
+            if (is_null($key)) {
+                return $decoded;
+            }
+
+            return data_get($decoded, $key, $default);
+        });
     }
 }

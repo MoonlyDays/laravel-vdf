@@ -15,7 +15,6 @@ namespace MoonlyDays\LaravelVDF;
 */
 
 use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Support\Fluent;
 use Illuminate\Support\Traits\EnumeratesValues;
 
 class Service
@@ -49,8 +48,8 @@ class Service
 
         $lines = preg_split('/\n/', $text);
 
-        $arr = array();
-        $stack = array(0 => &$arr);
+        $arr = [];
+        $stack = [0 => &$arr];
         $expect_bracket = false;
 
         $re_keyvalue = '~^("(?P<qkey>(?:\\\\.|[^\\\\"])+)"|(?P<key>[a-z0-9\\-\\_]+))'.
@@ -64,13 +63,14 @@ class Service
             $line = trim($lines[$i]);
 
             // skip empty and comment lines
-            if ($line == "" || $line[0] == '/') {
+            if ($line == '' || $line[0] == '/') {
                 continue;
             }
 
             // one level deeper
-            if ($line[0] == "{") {
+            if ($line[0] == '{') {
                 $expect_bracket = false;
+
                 continue;
             }
 
@@ -79,8 +79,9 @@ class Service
             }
 
             // one level back
-            if ($line[0] == "}") {
+            if ($line[0] == '}') {
                 array_pop($stack);
+
                 continue;
             }
 
@@ -88,28 +89,29 @@ class Service
             while (true) {
                 preg_match($re_keyvalue, $line, $m);
 
-                if (!$m) {
-                    throw new VDFException("invalid syntax on line ".($i + 1));
+                if (! $m) {
+                    throw new VDFException('invalid syntax on line '.($i + 1));
                 }
 
-                $key = (isset($m['key']) && $m['key'] !== "")
+                $key = (isset($m['key']) && $m['key'] !== '')
                     ? $m['key']
                     : $m['qkey'];
-                $val = (isset($m['qval']) && (!isset($m['vq_end']) || $m['vq_end'] !== ""))
+                $val = (isset($m['qval']) && (! isset($m['vq_end']) || $m['vq_end'] !== ''))
                     ? $m['qval']
                     : ($m['val'] ?? false);
 
                 if ($val === false) {
                     // chain (merge*) duplicate key
-                    if (!isset($stack[count($stack) - 1][$key])) {
-                        $stack[count($stack) - 1][$key] = array();
+                    if (! isset($stack[count($stack) - 1][$key])) {
+                        $stack[count($stack) - 1][$key] = [];
                     }
                     $stack[] = &$stack[count($stack) - 1][$key];
                     $expect_bracket = true;
                 } else {
                     // if you don't match a closing quote for value, we consume one more line, until we find it
-                    if (!isset($m['vq_end']) && isset($m['qval'])) {
+                    if (! isset($m['vq_end']) && isset($m['qval'])) {
                         $line .= "\n".$lines[++$i];
+
                         continue;
                     }
 
@@ -120,7 +122,7 @@ class Service
         }
 
         if (count($stack) !== 1) {
-            throw new VDFException("Open parentheses somewhere");
+            throw new VDFException('Open parentheses somewhere');
         }
 
         return $arr;
@@ -133,8 +135,8 @@ class Service
 
     private function encode_step(array $arr, bool $pretty, int $level): ?string
     {
-        $buf = "";
-        $line_indent = ($pretty) ? str_repeat("\t", $level) : "";
+        $buf = '';
+        $line_indent = ($pretty) ? str_repeat("\t", $level) : '';
 
         foreach ($arr as $k => $v) {
             if (is_string($v)) {
