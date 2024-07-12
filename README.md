@@ -1,4 +1,4 @@
-# Laravel SourceQuery
+# Laravel VDF
 
 This packages serves as a wrapper for https://github.com/rossengeorgiev/vdf-parser package optimized for Laravel.
 
