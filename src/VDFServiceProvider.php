@@ -3,6 +3,7 @@
 namespace MoonlyDays\LaravelVDF;
 
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,6 +26,11 @@ class VDFServiceProvider extends ServiceProvider
         });
 
         Filesystem::macro('vdf', function (string $path) {
+            /** @var Filesystem $this */
+            return app(Service::class)->decode($this->get($path));
+        });
+
+        FilesystemAdapter::macro('vdf', function (string $path) {
             /** @var Filesystem $this */
             return app(Service::class)->decode($this->get($path));
         });

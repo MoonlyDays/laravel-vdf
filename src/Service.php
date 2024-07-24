@@ -17,7 +17,7 @@ namespace MoonlyDays\LaravelVDF;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Traits\EnumeratesValues;
 
-class Service
+final class Service
 {
     use EnumeratesValues;
 
@@ -130,10 +130,10 @@ class Service
 
     public function encode(Arrayable|array $arr, bool $pretty = false): ?string
     {
-        return $this->encode_step($this->getArrayableItems($arr), $pretty, 0);
+        return $this->encodeStep($this->getArrayableItems($arr), $pretty, 0);
     }
 
-    private function encode_step(array $arr, bool $pretty, int $level): ?string
+    protected function encodeStep(array $arr, bool $pretty, int $level): ?string
     {
         $buf = '';
         $line_indent = ($pretty) ? str_repeat("\t", $level) : '';
@@ -142,7 +142,7 @@ class Service
             if (is_string($v)) {
                 $buf .= "$line_indent\"$k\" \"$v\"\n";
             } else {
-                $res = $this->encode_step($v, $pretty, $level + 1);
+                $res = $this->encodeStep($v, $pretty, $level + 1);
                 if ($res === null) {
                     return null;
                 }

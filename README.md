@@ -5,5 +5,3 @@ This packages serves as a wrapper for https://github.com/rossengeorgiev/vdf-pars
 `composer require moonlydays/laravel-vdf`
 
 - rossengeorgiev/vdf-parser license: https://github.com/rossengeorgiev/vdf-parser/blob/master/LICENSE
-
-
