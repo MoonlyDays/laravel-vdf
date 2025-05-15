@@ -4,7 +4,6 @@
     "license": "MIT",
     "homepage": "https://github.com/MoonlyDays/laravel-vdf",
     "require": {
-        "illuminate/support": "^12.0",
         "laravel/framework": "^12.0"
     },
     "autoload": {
@@ -21,7 +20,7 @@
     "extra": {
         "laravel": {
             "aliases": {
-                "VDF": "MoonlyDays\\LaravelVDF\\Facade"
+                "VDF": "MoonlyDays\\LaravelVDF\\Facades\\VDF"
             },
             "providers": [
                 "MoonlyDays\\LaravelVDF\\VDFServiceProvider"

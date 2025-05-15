@@ -17,7 +17,7 @@ namespace MoonlyDays\LaravelVDF;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Traits\EnumeratesValues;
 
-final class Service
+final class VDFService
 {
     use EnumeratesValues;
 

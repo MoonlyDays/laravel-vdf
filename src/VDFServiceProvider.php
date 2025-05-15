@@ -11,12 +11,10 @@ class VDFServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->app->singleton(Service::class);
+        $this->app->singleton(VDFService::class);
 
         Response::macro('vdf', function (?string $key = null, mixed $default = null) {
-            /** @var Response $this */
-            $body = $this->body();
-            $decoded = app(Service::class)->decode($body);
+            $decoded = app(VDFService::class)->decode($this->body());
 
             if (is_null($key)) {
                 return $decoded;
@@ -26,13 +24,11 @@ class VDFServiceProvider extends ServiceProvider
         });
 
         Filesystem::macro('vdf', function (string $path) {
-            /** @var Filesystem $this */
-            return app(Service::class)->decode($this->get($path));
+            return app(VDFService::class)->decode($this->get($path));
         });
 
         FilesystemAdapter::macro('vdf', function (string $path) {
-            /** @var Filesystem $this */
-            return app(Service::class)->decode($this->get($path));
+            return app(VDFService::class)->decode($this->get($path));
         });
     }
 }
